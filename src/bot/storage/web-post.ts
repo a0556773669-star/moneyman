@@ -10,6 +10,7 @@ const WEB_POST_TIMEOUT_MS = 30_000;
 
 export class WebPostStorage implements TransactionStorage {
   constructor(private config: MoneymanConfig) {}
+  readonly supportsPendingTransactions = true;
 
   canSave() {
     return Boolean(this.config.storage.webPost?.url);
