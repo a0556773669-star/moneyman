@@ -38,7 +38,7 @@ export class WebPostStorage implements TransactionStorage {
           txns.map((tx) =>
             tableRow(
               tx,
-              false,
+              true,
               this.config.options.scraping.transactionHashType,
             ),
           ),
