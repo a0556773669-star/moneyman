@@ -37,6 +37,7 @@ export interface AccountStatus {
   errorMessage?: string;
   accountCount?: number;
   txnCount?: number;
+  balances?: Array<{ account: string; balance?: number }>;
 }
 
 export interface SaveContext {
