@@ -19,6 +19,7 @@ export class WebPostStorage implements TransactionStorage {
   async saveTransactions(
     txns: Array<TransactionRow>,
     onProgress: (status: string) => Promise<void>,
+    context?: { accountResults?: unknown[] },
   ) {
     logger("saveTransactions");
 
@@ -47,6 +48,15 @@ export class WebPostStorage implements TransactionStorage {
       }),
       onProgress("Sending"),
     ]);
+
+    if (context?.accountResults) {
+      await fetch(webPostConfig.url + "&status=1", {
+        signal: AbortSignal.timeout(WEB_POST_TIMEOUT_MS),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(context.accountResults),
+      }).catch(() => undefined);
+    }
 
     if (!response.ok) {
       logger(`Failed to post transactions: ${response.statusText}`);
