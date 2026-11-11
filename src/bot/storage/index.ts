@@ -75,6 +75,10 @@ export async function saveResults(
       accountCount: r.result.accounts?.length ?? 0,
       txnCount:
         r.result.accounts?.reduce((sum, a) => sum + a.txns.length, 0) ?? 0,
+      balances: r.result.accounts?.map((a) => ({
+        account: a.accountNumber,
+        balance: a.balance,
+      })),
     })),
   };
 
